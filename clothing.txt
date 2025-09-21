@@ -1,0 +1,5 @@
+T-Shirt,19.99
+Jeans,39.50
+Jacket,79.00
+Socks,5.99
+Hat,12.49
