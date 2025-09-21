@@ -56,7 +56,7 @@ public class ShopApp {
             Routing routing = Routing.builder()
                     .get("/items", list).build();
             ServerConfiguration config = ServerConfiguration.builder()
-                    .bindAddress(InetAddress.getLocalHost()).port(8888).build();
+                    .bindAddress(InetAddress.getLocalHost()).port(8888).host("0.0.0.0").build();
 
             WebServer ws = WebServer.create(config, routing);
             ws.start();
