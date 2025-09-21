@@ -23,14 +23,14 @@ cd ShopApp
 
 ### 2️⃣ Compile the Java Project
 ```bash
-mkdir -p out
-find . -name "*.java" > sources.txt
+mkdir out
+dir /s /b *.java > sources.txt
 javac -d out -cp "libs/*" @sources.txt
 ```
 
 ### 3️⃣ Run the Application
 ```bash
-java -cp "out:libs/*" duke.choice.ShopApp
+java -cp "out;libs/*" duke.choice.ShopApp
 ```
 - The server will start on port 8888 and bind to all interfaces.
 - You should see output like:
