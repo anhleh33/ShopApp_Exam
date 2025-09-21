@@ -1,7 +1,7 @@
-# Duke Shop Java + Helidon Project
+# Duke Shop Java
 
 ## Overview
-Duke Shop is a Java application that demonstrates a simple web server using **Helidon SE**.  
+Duke Shop is a Java application that demonstrates a simple web server  
 It allows loading clothing items from a file and exposes a REST endpoint to fetch them in JSON format.
 
 ---
