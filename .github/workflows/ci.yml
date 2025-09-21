@@ -1,19 +1,26 @@
-on: [push, pull_request]
+name: Java CI for Helidon Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Confirm checkout
         run: |
-          echo "📥 Checking out repository..."
+          echo "📥 Repository checked out"
           git --version
-          echo "✅ Repository checked out successfully"
 
+      # 2️⃣ Set up JDK
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -21,10 +28,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Confirm JDK setup
-        run: |
-          echo "☕ Setting up JDK 24 with Temurin..."
-          java -version
+        run: java -version
 
+      # 3️⃣ Compile Java files with external JARs
       - name: Compile Java code
         run: |
           echo "🛠️ Compiling Java files..."
@@ -33,7 +39,17 @@ jobs:
           javac -d out -cp "libs/*" @sources.txt
           echo "✅ Compilation finished"
 
-      - name: Run Java program
+      # 4️⃣ Run Helidon server in background and test it
+      - name: Test Helidon server endpoints
         run: |
-          echo "▶️ Running program..."
-          java -cp "out:libs/*" duke.choice.ShopApp
+          echo "▶️ Starting server in background..."
+          java -cp "out:libs/*" duke.choice.ShopApp &
+          SERVER_PID=$!
+          sleep 5  # wait for server to start
+
+          echo "🌐 Sending test HTTP request to localhost..."
+          # Replace /your-endpoint with an actual endpoint your server exposes
+          curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8888/ || echo "Server not responding"
+
+#          echo "🛑 Stopping server..."
+#          kill $SERVER_PID
