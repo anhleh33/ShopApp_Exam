@@ -48,7 +48,6 @@ jobs:
           sleep 5  # wait for server to start
 
           echo "🌐 Sending test HTTP request to localhost..."
-          # Replace /your-endpoint with an actual endpoint your server exposes
           curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8888/items || echo "Server not responding"
 
           echo "🛑 Stopping server..."

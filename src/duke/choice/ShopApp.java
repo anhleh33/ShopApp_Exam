@@ -63,7 +63,7 @@ public class ShopApp {
 
         WebServer ws = WebServer.create(config, routing);
         ws.start()
-                .thenAccept(server -> System.out.println("Server started at http://localhost:8888"))
+                .thenAccept(server -> System.out.println("Server started at http://localhost:8888/items"))
                 .exceptionally(t -> { t.printStackTrace(); return null; }); //hjy
 
         // Keep main thread alive so server doesn't exit
