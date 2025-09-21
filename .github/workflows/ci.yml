@@ -51,5 +51,5 @@ jobs:
           # Replace /your-endpoint with an actual endpoint your server exposes
           curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8888/ || echo "Server not responding"
 
-#          echo "🛑 Stopping server..."
-#          kill $SERVER_PID
+          echo "🛑 Stopping server..."
+          kill $SERVER_PID
