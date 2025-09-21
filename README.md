@@ -35,7 +35,7 @@ java -cp "out:libs/*" duke.choice.ShopApp
 - The server will start on port 8888 and bind to all interfaces.
 - You should see output like:
 ```bash
- Welcome to Duke Shop!
+Welcome to Duke Shop!
 Customer added to clothing: ...
 Server started at http://localhost:8888/items
 ```
