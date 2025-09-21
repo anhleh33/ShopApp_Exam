@@ -30,10 +30,10 @@ jobs:
           echo "🛠️ Compiling Java files..."
           mkdir -p out
           find . -name "*.java" > sources.txt
-          javac -d out @sources.txt
+          javac -d out -cp "libs/*" @sources.txt
           echo "✅ Compilation finished"
 
       - name: Run Java program
         run: |
           echo "▶️ Running program..."
-          java -cp out duke.choice.ShopApp
+          java -cp "out:libs/*" duke.choice.ShopApp
