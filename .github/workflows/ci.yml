@@ -1,0 +1,26 @@
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Confirm checkout
+        run: |
+          echo "📥 Checking out repository..."
+          git --version
+          echo "✅ Repository checked out successfully"
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '24'
+          distribution: 'temurin'
+
+      - name: Confirm JDK setup
+        run: |
+          echo "☕ Setting up JDK 24 with Temurin..."
+          java -version
