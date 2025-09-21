@@ -24,3 +24,16 @@ jobs:
         run: |
           echo "☕ Setting up JDK 24 with Temurin..."
           java -version
+
+      - name: Compile Java code
+        run: |
+          echo "🛠️ Compiling Java files..."
+          mkdir -p out
+          find . -name "*.java" > sources.txt
+          javac -d out @sources.txt
+          echo "✅ Compilation finished"
+
+      - name: Run Java program
+        run: |
+          echo "▶️ Running program..."
+          java -cp out duke.choice.ShopApp
