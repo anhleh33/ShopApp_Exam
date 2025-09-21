@@ -11,12 +11,13 @@ import io.helidon.webserver.Routing;
 import io.helidon.webserver.ServerConfiguration;
 import io.helidon.webserver.WebServer;
 import java.net.UnknownHostException;
+import java.net.InetSocketAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class ShopApp {
-    public static void main(String[] args){
+    public static void main(String[] args) throws UnknownHostException, InterruptedException {
         System.out.println("Welcome to Duke Shop!");
         ArrayList<Clothing> items = new ArrayList<>();
         double total = 0;
@@ -51,17 +52,21 @@ public class ShopApp {
             System.out.println("Item: " + c);
         }
 
-        try{
-            ItemList list = new ItemList(items);
-            Routing routing = Routing.builder()
-                    .get("/items", list).build();
-            ServerConfiguration config = ServerConfiguration.builder()
-                    .bindAddress(InetAddress.getLocalHost()).port(8888).host("0.0.0.0").build();
+        ItemList list = new ItemList(items);
+        Routing routing = Routing.builder()
+                .get("/items", list).build();
 
-            WebServer ws = WebServer.create(config, routing);
-            ws.start();
-        }catch (UnknownHostException e){
-            e.printStackTrace();
-        }
+        ServerConfiguration config = ServerConfiguration.builder()
+                .bindAddress(InetAddress.getByName("0.0.0.0")) // bind to all interfaces
+                .port(8888) // specify port
+                .build();
+
+        WebServer ws = WebServer.create(config, routing);
+        ws.start()
+                .thenAccept(server -> System.out.println("Server started at http://localhost:8888"))
+                .exceptionally(t -> { t.printStackTrace(); return null; });
+
+        // Keep main thread alive so server doesn't exit
+        Thread.currentThread().join();
     }
 }
